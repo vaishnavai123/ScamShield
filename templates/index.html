@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScamShield - Message Security Analyzer</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+        }
+
+        header {
+            background: #14213d;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        header p {
+            margin-bottom: 0;
+            color: #dbeafe;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 35px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #14213d;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 8px;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+        }
+
+        .HIGH {
+            color: #b91c1c;
+        }
+
+        .MEDIUM {
+            color: #b45309;
+        }
+
+        .LOW {
+            color: #15803d;
+        }
+
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        .notice {
+            margin-top: 20px;
+            padding: 12px;
+            background: #eff6ff;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🛡️ ScamShield</h1>
+    <p>Suspicious Message Detection System</p>
+</header>
+
+<div class="container">
+
+    <h2>Analyse a Message</h2>
+
+    <p>
+        Paste a suspicious SMS or message below to check for
+        common scam indicators.
+    </p>
+
+    <form method="POST">
+
+        <label for="message">Enter your message:</label>
+
+        <textarea
+            id="message"
+            name="message"
+            maxlength="10000"
+            placeholder="Paste your message here..."
+            required>{{ message }}</textarea>
+
+        <button type="submit">Analyse Message</button>
+
+    </form>
+
+    {% if result %}
+
+    <div class="result">
+
+        <h2>Analysis Result</h2>
+
+        <p>
+            Risk Level:
+            <strong class="{{ result.risk_level }}">
+                {{ result.risk_level }}
+            </strong>
+        </p>
+
+        <p class="score">
+            Risk Score: {{ result.risk_score }}/100
+        </p>
+
+        <h3>Warning Signs Detected</h3>
+
+        <ul>
+            {% for finding in result.findings %}
+                <li>{{ finding }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Safety Recommendation</h3>
+
+        <p>{{ result.recommendation }}</p>
+
+    </div>
+
+    {% endif %}
+
+    <div class="notice">
+        <strong>Important:</strong>
+        This tool checks for known suspicious patterns.
+        A low score does not prove that a message is safe,
+        and a high score does not prove that it is fraudulent.
+        Do not share real passwords, OTPs or other sensitive
+        information when testing this application.
+    </div>
+
+</div>
+
+<footer>
+    ScamShield | Information Security PBL Project
+</footer>
+
+</body>
+</html>
